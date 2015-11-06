@@ -1,12 +1,12 @@
-# Ruby Object Relations: Has-Many-Through
+# Ruby Object Relations: Has-Many Through
 
 ## Introduction
 
 We've seen how objects can be related to one another directly, when one object contains a reference to another. 
 
-An individual song belongs to an artist, for example. That relationship is implement by giving a song instance an `artist` `attr_accessor` so that we can set `#artist=()` to an instance of the `Artist` class and retrieve that artist instance via the `#artist` method. 
+An individual song belongs to an artist, for example. That relationship is implemented by giving a `Song` instance an `artist` `attr_accessor`. Then we set that `artist` attribute to an instance of the `Artist` class. 
 
-An individual artist, conversely, has many songs. We implement this relationship by giving artists a song property that is set equal to an array of song instances. We add song instances to that array via an instance method on the `Artist` class, `#add_song`. 
+An individual artist, conversely, has many songs. We implement this relationship by giving artists a `song` property that is set equal to an array of song instances. We add song instances to that array via an instance method on the `Artist` class, `#add_song`. 
 
 Let's take a look:
 
@@ -33,13 +33,13 @@ end
 
 Notice that in the `#add_song` method, a song is passed in as an argument and added to an artist's `@songs` array. At the same time, that song's `artist` attribute is set equal to the instance of the artist that the `#add_song` is being called on, referenced by the `self` keyword. 
 
-This is the "has many"/"belong to" association. An song belongs to an artist and an artist has many songs. This relationship is direct. It is enacted with methods on our song and artist instances that directly reference and interact with objects of the other class. 
+This is the "has many"/"belong to" association. A song belongs to an artist and an artist has many songs. This relationship is direct. It is enacted with methods on our `Song` and `Artist` instances that directly reference and interact with objects of the other class. 
 
 However, in the real-world, different entities can be connected to one another *indirectly* as well as directly. For example:
 
 * A family tree in which you are directly related to your parents, and indirectly related to your grandparents. In this case, you are related to your grandparents *through* your parents. 
 * A company that offers a network of doctors to their employees *through* the company's insurance program. 
-* A user on a popular media sharing site can have many "likes", accured *through* the pictures he or she posts. 
+* A user on a popular media sharing site can have many "likes", that occur *through* the pictures he or she posts. 
 
 These are just a few examples of the kind of indirect relationships that we may need to model in our programs. 
 
@@ -49,9 +49,9 @@ In this lesson, we'll build out just such a relationship, using our music app do
 
 In our example, we already have a has many/belongs to relationship between songs and artists. Let's add in another model to step up the complexity of our associations. 
 
-In the real world, individual songs have a genre. For example, you could classify Jay-Z's "99 Problems" as a rap song but his song "Crazy in Love", with Beyonce, is more of a pop song. 
+In the real world, individual songs belong to a genre. For example, you could classify Jay-Z's "99 Problems" as a rap song but his song "Crazy in Love", with Beyonce, is more of a pop song. 
 
-Let's give our `Song` instances the ability to have a genre:
+Let's give our `Song` instances the ability to belong to a genre:
 
 ```ruby
 class Song
@@ -71,7 +71,7 @@ class Genre
 end
 ```
 
-Great! Now we can associate a song to a genre. At what point should this associated be created? When a a song is created, it can be categorized as a particular genre. So, let's create an `#initialize` method for our `Song` class that takes in an argument of a song name and a genre. 
+Great! Now we can associate a `Song` to a `Genre`. At what point should this association be created? When a song is created, it can be categorized as a particular genre. So, let's create an `#initialize` method for our `Song` class that takes in an argument of a song name and a genre. 
 
 ```ruby
 class Song
@@ -163,7 +163,7 @@ By simply querying an artist's songs for their genre, we use existing relationsh
 
 ### Completing the Relationship
 
-Right now, an artist can tell us about it's songs and about it's genres. But, a genre can't tell us about it's songs and it's artists. Let's fix that now. 
+Right now, an artist can tell us about its songs and about its genres. But, a genre can't tell us about its songs and its artists. Let's fix that now. 
 
 The first thing we want to do is build the direct relationship between a song and a genre. A song already belongs to a genre. Let's build the inverse of that relationship, the "has many" side. A genre should have many songs:
 
@@ -196,7 +196,7 @@ class Genre
 end
 ```
 
-Now, we can refactor our `Song` class such that when a new song is instantiated it gets associated to a genre *and* the given genre add that song to it's collection:
+Now, we can refactor our `Song` class such that when a new song is instantiated it gets associated to a genre *and* the given genre add that song to it's collection. This is similar to our `add_song` method from the `Artist` class:
 
 ```ruby
 class Song
