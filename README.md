@@ -196,7 +196,7 @@ class Genre
 end
 ```
 
-Now, we can refactor our `Song` class such that when a new song is instantiated it gets associated to a genre *and* the given genre add that song to it's collection. This is similar to our `add_song` method from the `Artist` class:
+Now, we can refactor our `Song` class such that when a new song is instantiated it gets associated to a genre *and* the given genre adds that song to it's collection. This is similar to our `add_song` method from the `Artist` class:
 
 ```ruby
 class Song
