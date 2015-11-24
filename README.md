@@ -200,7 +200,7 @@ Now, we can refactor our `Song` class such that when a new song is instantiated 
 
 ```ruby
 class Song
-  attr_accessor :name, artist, genre
+  attr_accessor :name, :artist, :genre
   
   def initialize(name, genre)
     @name = name
