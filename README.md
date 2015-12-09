@@ -205,7 +205,7 @@ class Song
   def initialize(name, genre)
     @name = name
     @genre = genre
-    genre.add_song(song)
+    genre.add_song(self)
   end
 end
 ```
@@ -255,5 +255,3 @@ The `Genre#artist` method iterates over the genre's `@songs` collection, calls t
 Why associate artists to genre objects *through* songs? By associating songs to genres, we are not only reflecting the real world situation that our program is meant to model, we are creating clean and re-usable code. Without the song/genre association, you'll find that you have to add a given song to an artist's list of songs and then separately add a genre to that artist. 
 
 With our "through association", as long as we have properly associated a song to a given genre and that same song to a given artist, our connection between an artist and his or her genres will automatically follow. 
-
-<a href='https://learn.co/lessons/ruby-objects-has-many-through-readme' data-visibility='hidden'>View this lesson on Learn.co</a>
