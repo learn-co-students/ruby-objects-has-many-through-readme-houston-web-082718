@@ -222,7 +222,7 @@ rap.songs
   # => [ninety_nine_problems, lucifer]
 ```
 
-Now a song knows about the genre it belongs to a genre knows about the many songs that it has. 
+Now a song knows about the genre it belongs to and a genre knows about the many songs that it has. 
 
 Let's put the finishing touches on our "has many through" relationship and tell our genres how to show us the artists they are associated to *through* the songs it has. 
 
@@ -247,7 +247,7 @@ class Genre
 end
 ```
 
-The `Genre#artist` method iterates over the genre's `@songs` collection, calls the `#artist` method on each song object and collects the resulting artists. 
+The `Genre #artists` method iterates over the genre's `@songs` collection, calls the `#artists` method on each song object and collects the resulting artists. 
 
 
 ## Conclusion: The Advantages of the "has many through" relationship
@@ -255,3 +255,5 @@ The `Genre#artist` method iterates over the genre's `@songs` collection, calls t
 Why associate artists to genre objects *through* songs? By associating songs to genres, we are not only reflecting the real world situation that our program is meant to model, we are creating clean and re-usable code. Without the song/genre association, you'll find that you have to add a given song to an artist's list of songs and then separately add a genre to that artist. 
 
 With our "through association", as long as we have properly associated a song to a given genre and that same song to a given artist, our connection between an artist and his or her genres will automatically follow. 
+
+<a href='https://learn.co/lessons/ruby-objects-has-many-through-readme' data-visibility='hidden'>View this lesson on Learn.co</a>
