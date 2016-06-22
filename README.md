@@ -6,7 +6,7 @@ We've seen how objects can be related to one another directly, when one object c
 
 An individual song belongs to an artist, for example. That relationship is implemented by giving a `Song` instance an `artist` `attr_accessor`. Then we set that `artist` attribute to an instance of the `Artist` class. 
 
-An individual artist, conversely, has many songs. We implement this relationship by giving artists a `song` property that is set equal to an array of song instances. We add song instances to that array via an instance method on the `Artist` class, `#add_song`. 
+An individual artist, conversely, has many songs. We implement this relationship by giving artists a `songs` property that is set equal to an array of song instances. We add song instances to that array via an instance method on the `Artist` class, `#add_song`. 
 
 Let's take a look:
 
@@ -192,6 +192,10 @@ class Genre
     @songs = []
   end
   
+  def songs
+    @songs
+  end
+        
   def add_song(song)
     @songs << song
   end
@@ -237,6 +241,10 @@ class Genre
     @songs = []
   end
   
+  def songs
+    @songs
+  end
+        
   def add_song(song)
     @songs << song
   end
@@ -259,3 +267,5 @@ Why associate artists to genre objects *through* songs? By associating songs to 
 With our "through association", as long as we have properly associated a song to a given genre and that same song to a given artist, our connection between an artist and his or her genres will automatically follow. 
 
 <p data-visibility='hidden'>View <a href='https://learn.co/lessons/ruby-objects-has-many-through-readme' title='Ruby Object Relations: Has-Many Through'>Ruby Object Relations: Has-Many Through</a> on Learn.co and start learning to code for free.</p>
+
+<p class='util--hide'>View <a href='https://learn.co/lessons/ruby-objects-has-many-through-readme'>Has Many Objects Through</a> on Learn.co and start learning to code for free.</p>
