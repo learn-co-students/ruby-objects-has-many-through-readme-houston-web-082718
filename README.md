@@ -34,7 +34,7 @@ end
 
 Notice that in the `#add_song` method, a song is passed in as an argument and added to an artist's `@songs` array. At the same time, that song's `artist` attribute is set equal to the instance of the artist that the `#add_song` is being called on, referenced by the `self` keyword. 
 
-This is the "has many"/"belong to" association. A song belongs to an artist and an artist has many songs. This relationship is direct. It is enacted with methods on our `Song` and `Artist` instances that directly reference and interact with objects of the other class. 
+This is the "has many"/"belongs to" association. A song belongs to an artist and an artist has many songs. This relationship is direct. It is enacted with methods on our `Song` and `Artist` instances that directly reference and interact with objects of the other class. 
 
 However, in the real-world, different entities can be connected to one another *indirectly* as well as directly. For example:
 
@@ -105,7 +105,7 @@ Let's take a step back and think about the web of relationships that exists betw
 
 Here we can see that an artist has many songs and that each song belongs to one artist and one genre. This diagram makes it clear to us that an artist *does* have a connection to genres. That connection exists *through* the many songs that an artist owns. **This is the "has many through" relationship**. A given object has many of another type of object. That second object belongs to (or has many) of a third type of object. Therefore, the first object has many of the third object as well. 
 
-So, if artists do in fact have many genres, *through* songs, how can we ask a given artist to show us the genres that it is associated with? An artist has a genre through the songs that it has created, so in order to ask an artist about it's genre, we have to go through that artist's songs. 
+So, if artists do in fact have many genres, *through* songs, how can we ask a given artist to show us the genres that it is associated with? An artist has a genre through the songs that it has created, so in order to ask an artist about its genre, we have to go through that artist's songs. 
 
 We'll need to collect all of the songs of a given artist and *then* collect the genre associated to each of those songs. 
 
@@ -198,7 +198,7 @@ class Genre
 end
 ```
 
-Now, we can refactor our `Song` class such that when a new song is instantiated it gets associated to a genre *and* the given genre adds that song to it's collection. This is similar to our `add_song` method from the `Artist` class:
+Now, we can refactor our `Song` class such that when a new song is instantiated it gets associated to a genre *and* the given genre adds that song to its collection. This is similar to our `add_song` method from the `Artist` class:
 
 ```ruby
 class Song
@@ -226,7 +226,7 @@ rap.songs
 
 Now a song knows about the genre it belongs to and a genre knows about the many songs that it has. 
 
-Let's put the finishing touches on our "has many through" relationship and tell our genres how to show us the artists they are associated to *through* the songs it has. 
+Let's put the finishing touches on our "has many through" relationship and tell our genres how to show us the artists they are associated to *through* the songs they have. 
 
 ```ruby
 class Genre
@@ -254,8 +254,10 @@ The `Genre #artists` method iterates over the genre's `@songs` collection, calls
 
 ## Conclusion: The Advantages of the "has many through" relationship
 
-Why associate artists to genre objects *through* songs? By associating songs to genres, we are not only reflecting the real world situation that our program is meant to model, we are creating clean and re-usable code. Without the song/genre association, you'll find that you have to add a given song to an artist's list of songs and then separately add a genre to that artist. 
+Why associate artists to genre objects *through* songs? By associating songs to genres, we are not only reflecting the real world situation that our program is meant to model, but we are also creating clean and re-usable code. Without the song/genre association, you'll find that you have to add a given song to an artist's list of songs and then separately add a genre to that artist. 
 
 With our "through association", as long as we have properly associated a song to a given genre and that same song to a given artist, our connection between an artist and his or her genres will automatically follow. 
 
 <p data-visibility='hidden'>View <a href='https://learn.co/lessons/ruby-objects-has-many-through-readme' title='Ruby Object Relations: Has-Many Through'>Ruby Object Relations: Has-Many Through</a> on Learn.co and start learning to code for free.</p>
+
+<p class='util--hide'>View <a href='https://learn.co/lessons/ruby-objects-has-many-through-readme'>Has Many Objects Through</a> on Learn.co and start learning to code for free.</p>
