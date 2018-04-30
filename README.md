@@ -6,9 +6,9 @@ We've seen how objects can be related to one another directly, when one object c
 
 However, in the real-world, different entities can be connected to one another _indirectly_ as well as directly. For example:
 
-* A company that offers a network of doctors to their employees _through_ the company's insurance program.
-* A user on a popular media sharing site can have many "likes", that occur _through_ the pictures they post.
-* A Lyft driver that you are connected to _through_ the rides you've taken with them.
+* A company that offers a network of doctors to their employees _through_ the company's insurance program
+* A user on a popular media sharing site can have many "likes", that occur _through_ the pictures they post
+* A Lyft driver that you are connected to _through_ the rides you've taken with them
 
 These are just a few examples of the kind of indirect relationships that we may need to model in our programs.
 
