@@ -1,8 +1,16 @@
 # Ruby Object Relations: Has-Many Through
 
+## Objectives
+
+TODO: bullet these (i.e. "understand has many through relationships", "build out indirect relationships using models x, y, z", "explore the role of a 'joining' model")
+
 ## Introduction
 
 We've seen how objects can be related to one another directly, when one object contains a reference to another. This is the "has many"/"belongs to" association, and is a direct relationship.
+
+TODO: remind with small example (book has many reviews)
+
+TODO: define the below on its own, not in contrast to previous topic: "In addition to having 'one to one' or 'one to many' relationships, there also exist tertiary relationships". Try leading off by describing the intermediary linking object, instead of defining it as 'indirect', which could mean something else
 
 However, in the real-world, different entities can be connected to one another _indirectly_ as well as directly. For example:
 
@@ -14,7 +22,11 @@ These are just a few examples of the kind of indirect relationships that we may 
 
 In this lesson, we'll build out just such a relationship using waiters, customers, and meals. A customer has many meals, and a customer has many waiters through those meals. Similarly, a waiter has many meals, and has many customers through meals. We'll dig into that in just a minute, but let's start with the stuff we already know.
 
+TODO: avoid bringing something up just to say we will address it later. Places the burden on the student to leave an unresolved question in their head. Keep it streamlined. "Here is x. We explain x. Now on to y. Now we know x and y. They are related because of z."
+
 ## Our Domain Model
+
+TODO: the old readme worked by jumping into this because they used the code snippet example to transition. Without that, its unclear what a 'Domain Model' has to do with what we said we wanted to teach them. Stick to the "this is what we are teaching premise". outline the example, then move in to this. TL;DR: transition was jarring. Needs more continuity. 
 
 Domain models often mimic real life. They don't always have to, but in this case, our model is going to be something that we all know pretty well. Let's start by building out the `Customer` and `Waiter` classes.
 
@@ -58,6 +70,8 @@ class Waiter
 
 end
 ```
+
+TODO: below we open an idea that we then tell them to shelve immediately. Finish the core lesson then add in this functionality when you bring up the possibility, instead of having them hold on to it. 
 
 Our `Waiter` has a name and an attribute relating to their their years of experience. We could instantiate a waiter with anything we wanted to, but it might be fun to do some math later and see if our customers tip experienced waiters better.
 
