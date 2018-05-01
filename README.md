@@ -2,33 +2,33 @@
 
 ## Objectives
 
-TODO: bullet these (i.e. "understand has many through relationships", "build out indirect relationships using models x, y, z", "explore the role of a 'joining' model")
+* Understand Has-Many-Through relationships
+* Build Out a Has-Many-Through relationship using Customers, Waiters and Meals
+* Understand the concept of a join model
+* Continue to write code using the Single Source of Truth
+
 
 ## Introduction
 
-We've seen how objects can be related to one another directly, when one object contains a reference to another. This is the "has many"/"belongs to" association, and is a direct relationship.
+We've seen how objects can be related to one another directly, when one object contains a reference to another. This is the "has many"/"belongs to" association, and is a direct relationship. An artist has many songs, for example. Or a book has many reviews.
 
-TODO: remind with small example (book has many reviews)
+In addition to these one-to-one and one-to-many relationships, there are relationships that need something to join them together. For example, you don't need to have a direct relationship with the pilot of a flight you're on. You have a relationship with that flight (you're taking the flight after all), and and the pilot has a relationship with the flight (they're flying it). So you have a relationship to that pilot _through_ the flight.
 
-TODO: define the below on its own, not in contrast to previous topic: "In addition to having 'one to one' or 'one to many' relationships, there also exist tertiary relationships". Try leading off by describing the intermediary linking object, instead of defining it as 'indirect', which could mean something else
+If you take more than one flight, you'll have these kinds of relationships with more than one pilot, all still using your ticket as the middle man.  The way we refer to this is that each customer _has many_ pilots _through_ tickets.
 
-However, in the real-world, different entities can be connected to one another _indirectly_ as well as directly. For example:
+Check out some more examples:
 
 * A company that offers a network of doctors to their employees _through_ the company's insurance program
 * A user on a popular media sharing site can have many "likes", that occur _through_ the pictures they post
 * A Lyft driver that you are connected to _through_ the rides you've taken with them
+]
 
-These are just a few examples of the kind of indirect relationships that we may need to model in our programs.
+In this lesson, we'll build out just such a relationship using waiters, customers, and meals. A customer has many meals, and a customer has many waiters through those meals. Similarly, a waiter has many meals, and has many customers through meals.
 
-In this lesson, we'll build out just such a relationship using waiters, customers, and meals. A customer has many meals, and a customer has many waiters through those meals. Similarly, a waiter has many meals, and has many customers through meals. We'll dig into that in just a minute, but let's start with the stuff we already know.
 
-TODO: avoid bringing something up just to say we will address it later. Places the burden on the student to leave an unresolved question in their head. Keep it streamlined. "Here is x. We explain x. Now on to y. Now we know x and y. They are related because of z."
+## Building out our Classes
 
-## Our Domain Model
-
-TODO: the old readme worked by jumping into this because they used the code snippet example to transition. Without that, its unclear what a 'Domain Model' has to do with what we said we wanted to teach them. Stick to the "this is what we are teaching premise". outline the example, then move in to this. TL;DR: transition was jarring. Needs more continuity. 
-
-Domain models often mimic real life. They don't always have to, but in this case, our model is going to be something that we all know pretty well. Let's start by building out the `Customer` and `Waiter` classes.
+Let's start by building out the `Customer` class and `Waiter` class.  We want to make sure, when building out classes, that there's something to store each instance.  That is to say: the `Customer` class should know about every `customer` instance that gets created.
 
 ```ruby
 class Customer
@@ -49,7 +49,7 @@ class Customer
 end
 ```
 
-As you can see, our `Customer` has a name and an age. Their name and age are set upon initialization, and because we created an attribute accessor for both, the customer is able to change their name or age. If we wanted to limit this ability to read only, we would create an attibute reader instead. The Customer class also has a class variable that tracks every instance of `customer` upon creation.
+As you can see, each `customer` instance has a name and an age. Their name and age are set upon initialization, and because we created an attribute accessor for both, the customer is able to change their name or age. If we wanted to limit this ability to read only, we would create an attibute reader instead. The `Customer` class also has a class variable that tracks every instance of `customer` upon creation.
 
 ```ruby
 class Waiter
@@ -71,13 +71,11 @@ class Waiter
 end
 ```
 
-TODO: below we open an idea that we then tell them to shelve immediately. Finish the core lesson then add in this functionality when you bring up the possibility, instead of having them hold on to it. 
-
-Our `Waiter` has a name and an attribute relating to their their years of experience. We could instantiate a waiter with anything we wanted to, but it might be fun to do some math later and see if our customers tip experienced waiters better.
+Each `waiter` instance has a name and an attribute relating to their their years of experience. Just like the `Customer` class, the `Waiter` class has an class variable that stores every instance of `waiter` upon creation.
 
 ## The "has many through" Relationship
 
-As a customer, each time you go out to eat, you have a different meal. Even if you order the same exact thing in the exact same restaurant, it's a different instance of that meal. So it goes without saying that a customer can have many meals.
+In real life, as a customer, each time you go out to eat, you have a different meal. Even if you order the same exact thing in the exact same restaurant, it's a different instance of that meal. So it goes without saying that a customer can have many meals.
 
 It's a safe bet to assume that unless you only eat at one very small restaurant, you'll have many different waiters as well. Not all at once of course, because you only have one waiter per meal. So it could be said that your relationship with the waiter is through your meal. The same could be said of the waiter's relationship with each customer.
 
@@ -85,7 +83,7 @@ That's the essence of the `has many through` relationship.
 
 ## How Does That Work in Code?
 
-Great question! The way we're going to implement this relationship is by setting up our `Meal` class as a join between our `Waiter` and our `Customer`. And because we're obeying the `single source of truth`, we're going to tell the `Meal` class to know all the details of each meal. That means not only the total cost and the tip (which defaults to 0), but who the customer and waiter were for each meal.
+Great question! The way we're going to implement this relationship is by setting up our `Meal` class as a join between our `Waiter` and our `Customer` classes. And because we're obeying the `single source of truth`, we're going to tell the `Meal` class to know all the details of each `meal` instance. That means not only the total cost and the tip (which defaults to 0), but who the `customer` and `waiter` were for each meal.
 
 ```ruby
 class Meal
@@ -108,11 +106,11 @@ class Meal
 end
 ```
 
-That looks great! And even better, it's going to give both `customer` and `waiter` the ability to get all the information they need to without having to store it themselves. Let's build some methods.
+That looks great! And even better, it's going to give both `customer` and `waiter` instances the ability to get all the information they need to without having to store it themselves. Let's build some methods.
 
 ## Building on the relationship
 
-If you take a look at our `customer` right now, they don't really have a lot to do. Let's change that up and give them the ability to create a meal. To do this, they'll need to take in an instance of a `waiter` and supply the `total` and `tip`, which we'll have default to 0 here as well.
+If you take a look at our `customer` right now, they don't really have a lot to do. Let's change that up and give them the ability to create a `meal`. To do this, they'll need to take in an instance of a `waiter` and supply the `total` and `tip`, which we'll have default to 0 here as well.
 
 ```ruby
   def new_meal(waiter, total, tip=0)
@@ -120,7 +118,7 @@ If you take a look at our `customer` right now, they don't really have a lot to 
   end
 ```
 
-As you can see, we don't need to take `customer` in as an argument, because we're passing in `self` to represent the current instance of customer. This method will allow us to create new meals as a customer, and automatically associates each new meal with the customer that creates it. We can do the same thing for `waiter`.
+As you can see, we don't need to take `customer` in as an argument, because we're passing in `self` to represent the current instance of customer. This method will allow us to create new meals as a `customer`, and automatically associates each new `meal` with the `customer` that creates it. We can do the same thing for the `Waiter` class.
 
 ```ruby
   def new_meal(customer, total, tip=0)
@@ -128,7 +126,7 @@ As you can see, we don't need to take `customer` in as an argument, because we'r
   end
 ```
 
-Great! Now we can create waiters, customers and meals to our heart's content.
+Great! Now we can create `waiters`, `customers` and `meals` to our heart's content.
 
 ```ruby
   sam = Customer.new("Sam", 27)
@@ -141,7 +139,9 @@ Great! Now we can create waiters, customers and meals to our heart's content.
 
 ## Completing the relationship
 
-This is awesome, but it isn't done yet! We need a way for our `customer` and `waiter` to get the information that they've created. A customer will want to know about the meals they've had after all, and you can bet a waiter will want to check out which customers tipped well. To get that information, we're going to consult the meal class.
+This is awesome, but it isn't done yet! We need a way for our `customer` and `waiter` instances to get the information that they've created.
+
+In real life, after all, a customer will want to know about the meals they've had. And you can bet a waiter will want to check out which customers tipped well. To get that information, we're going to consult the `Meal` class.
 
 In plain English, the customer is going to look at all of the meals, and then select only the ones that belong to them. This is pretty similar to how we're going to write it in code.
 
@@ -153,7 +153,7 @@ In plain English, the customer is going to look at all of the meals, and then se
   end
 ```
 
-Boom. We're iterating through every instance of Meal and returning only the ones where the meal's customer matches the current customer instance. If our customer, Sam, wants to know about all of their meals, all we need to do is call the meals method on that instance.
+Boom. We're iterating through every instance of `Meal` and returning only the ones where the meal's `customer` matches the current `customer` instance. If our customer, Sam, wants to know about all of their meals, all we need to do is call the `#meals` method on that instance.
 
 `sam.meals` will get an an array of all of Sam's meals, but what if we now want a list of all of the waiters that Sam has interacted with? We can simply reference the meals array! And since we have a method to get that array already, we can reuse that method.
 
@@ -165,7 +165,7 @@ Boom. We're iterating through every instance of Meal and returning only the ones
   end
 ```
 
-And there you have it, an array of the waiters our customer has interacted with. From here, we can get the names of those waiters, average years of experience, or whatever else we want to find out. And we did it all without having to store the `waiter` information on the customer - we did it by going _through_ `meals`.
+And there you have it, an array of the `waiters` our `customer` has interacted with. From here, we can get the names of those waiters, average years of experience, or whatever else we want to find out. And we did it all without having to store the `waiter` information on the customer - we did it by going _through_ `meals`.
 
 ## Conclusion: The Advantages of the "has many through" relationship
 
@@ -173,11 +173,12 @@ Why associate customers to waiter objects _through_ meals? By associating meals 
 
 ## Further Practice
 
-Below you'll find all the code for the Customer class, including a few new methods, and you already have all the code for the Meal class. Try building out the Waiter class to match these patterns and then build methods to return the following.
+Below you'll find all the code for the `Customer` class, including a few new methods, and you already have all the code for the `Meal` class. Try building out the `Waiter` class to match these patterns and then build methods to return the following.
 
 * The average years of experience of all waiters
 * A list of the names of customers that a specific waiter has served
 * The customer that has tipped a specific waiter the highest
+* The average tips for the most experienced waiter and the average tips for the least experienced waiter.
 
 ```ruby
 class Customer
