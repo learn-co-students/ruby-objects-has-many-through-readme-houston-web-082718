@@ -117,7 +117,7 @@ If you take a look at our `customer` right now, they aren't capable of doing muc
   end
 ```
 
-As you can see, we don't need to take `customer` in as an argument, because we're passing in `self` as reference to the current instance of customer. This method will allow us to create new meals as a `customer`, and automatically associates each new `meal` with the `customer` that created it. We can do the same thing for the `Waiter` class.
+As you can see, we don't need to take `customer` in as an argument, because we're passing in `self` as reference to the current instance of customer. This method will allow us to create new meals as a `customer`, and automatically associate each new `meal` with the `customer` that created it. We can do the same thing for the `Waiter` class:
 
 ```ruby
   def new_meal(customer, total, tip=0)
