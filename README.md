@@ -2,10 +2,10 @@
 
 ## Objectives
 
-* Understand Has-Many-Through relationships.
-* Construct indirect relationships between models (Customers, Waiters and Meals).
-* Explore the concept of a 'joining' model.
-* Continue to write code using a Single Source of Truth.
+* Understand Has-Many-Through relationships
+* Construct indirect relationships between models (Customers, Waiters and Meals)
+* Explore the concept of a 'joining' model
+* Continue to write code using a Single Source of Truth
 
 
 ## Introduction
